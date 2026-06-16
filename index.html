@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salesforce for Noosa Radiology — A Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #0b2545;
+    --navy: #13315c;
+    --navy-soft: #1d4e89;
+    --teal: #2a9d8f;
+    --teal-bright: #14b8a6;
+    --teal-soft: #e0f2f1;
+    --cream: #f7f4ee;
+    --paper: #fbfaf7;
+    --ink: #14213d;
+    --ink-soft: #4a5568;
+    --line: #e2e8f0;
+    --gold: #c9a961;
+    --shadow-sm: 0 1px 3px rgba(11, 37, 69, 0.06), 0 1px 2px rgba(11, 37, 69, 0.04);
+    --shadow-md: 0 4px 16px rgba(11, 37, 69, 0.08), 0 2px 4px rgba(11, 37, 69, 0.05);
+    --shadow-lg: 0 12px 32px rgba(11, 37, 69, 0.10), 0 4px 8px rgba(11, 37, 69, 0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ===== TOP BAR ===== */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(251, 250, 247, 0.92);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .topbar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .brand-mark {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    color: var(--navy-deep);
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-mark svg { flex-shrink: 0; }
+
+  .brand-divider {
+    color: var(--line);
+    font-weight: 400;
+  }
+
+  .brand-partner {
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .topbar-meta {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 60%, var(--navy-soft) 100%);
+    color: white;
+    padding: 110px 0 130px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -150px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(42, 157, 143, 0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.10) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal-bright);
+    margin-bottom: 28px;
+    padding: 8px 16px;
+    background: rgba(42, 157, 143, 0.12);
+    border: 1px solid rgba(42, 157, 143, 0.25);
+    border-radius: 100px;
+  }
+
+  .hero-eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--teal-bright);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--teal-bright);
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 4.6vw, 56px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 .highlight {
+    color: var(--teal-bright);
+    font-style: italic;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 400;
+  }
+
+  .hero-sub {
+    font-size: 19px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.82);
+    margin-bottom: 40px;
+    max-width: 560px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+  }
+
+  .btn-primary {
+    background: var(--teal);
+    color: white;
+    box-shadow: 0 4px 14px rgba(42, 157, 143, 0.4);
+  }
+
+  .btn-primary:hover {
+    background: var(--teal-bright);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(42, 157, 143, 0.5);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: white;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .btn-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .btn:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+
+  /* Hero card visual */
+  .hero-visual {
+    position: relative;
+  }
+
+  .hero-card {
+    background: white;
+    border-radius: 14px;
+    padding: 28px;
+    color: var(--ink);
+    box-shadow: var(--shadow-lg);
+    transform: rotate(-1.5deg);
+    position: relative;
+  }
+
+  .hero-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 18px;
+  }
+
+  .hero-card-title {
+    font-weight: 700;
+    color: var(--navy-deep);
+    font-size: 14px;
+  }
+
+  .hero-card-badge {
+    background: var(--teal-soft);
+    color: var(--teal);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    font-size: 13px;
+  }
+
+  .hero-row + .hero-row {
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .hero-row-label {
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy-soft), var(--teal));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 11px;
+  }
+
+  .hero-row-value {
+    font-weight: 600;
+    color: var(--navy-deep);
+  }
+
+  .trend-up { color: #16a34a; }
+  .trend-down { color: #dc2626; }
+  .trend-flat { color: var(--ink-soft); }
+
+  .hero-card-2 {
+    position: absolute;
+    bottom: -50px;
+    right: -30px;
+    background: white;
+    border-radius: 12px;
+    padding: 18px 22px;
+    box-shadow: var(--shadow-lg);
+    transform: rotate(3deg);
+    border: 1px solid var(--line);
+  }
+
+  .hero-card-2-label {
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .hero-card-2-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--navy-deep);
+    line-height: 1;
+  }
+
+  .hero-card-2-trend {
+    color: var(--teal);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 6px;
+  }
+
+  /* ===== SECTIONS ===== */
+  section {
+    padding: 100px 0;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(30px, 3.4vw, 42px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--navy-deep);
+    margin-bottom: 20px;
+    max-width: 720px;
+  }
+
+  .section-title .accent {
+    font-family: 'Source Serif 4', serif;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--teal);
+  }
+
+  .section-lede {
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 720px;
+    margin-bottom: 56px;
+  }
+
+  /* ===== PROBLEM SECTION ===== */
+  .problem {
+    background: var(--cream);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 16px;
+  }
+
+  .problem-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .problem-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .problem-icon {
+    width: 44px;
+    height: 44px;
+    background: #fef2f2;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    font-size: 22px;
+  }
+
+  .problem-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy-deep);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .problem-card p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .problem-callout {
+    margin-top: 48px;
+    padding: 32px 36px;
+    background: var(--navy-deep);
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .problem-callout-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(42, 157, 143, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 28px;
+  }
+
+  .problem-callout-text {
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .problem-callout-text strong {
+    color: var(--teal-bright);
+  }
+
+  /* ===== SOLUTION SECTION ===== */
+  .solution-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 24px;
+  }
+
+  .solution-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 1.2fr;
+    gap: 40px;
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+
+  .solution-item:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .solution-number {
+    font-family: 'Source Serif 4', serif;
+    font-size: 36px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--teal);
+    line-height: 1;
+  }
+
+  .solution-content h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy-deep);
+    margin-bottom: 10px;
+    letter-spacing: -0.015em;
+  }
+
+  .solution-content .plain-name {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--ink-soft);
+    background: var(--cream);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    border: 1px solid var(--line);
+  }
+
+  .solution-content p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .solution-visual {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .visual-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+
+  .visual-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .visual-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e5e7eb;
+  }
+
+  .visual-dots span:nth-child(1) { background: #ef4444; }
+  .visual-dots span:nth-child(2) { background: #f59e0b; }
+  .visual-dots span:nth-child(3) { background: #10b981; }
+
+  .visual-title {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .visual-content { font-size: 13px; }
+
+  .visual-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+  }
+
+  .visual-row + .visual-row {
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .visual-row-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .visual-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .pill-gp { background: #dbeafe; color: #1e40af; }
+  .pill-spec { background: #fef3c7; color: #92400e; }
+  .pill-dental { background: #f3e8ff; color: #6b21a8; }
+  .pill-allied { background: #dcfce7; color: #166534; }
+
+  .visual-row-meta {
+    color: var(--ink-soft);
+    font-size: 12px;
+  }
+
+  /* Activity timeline visual */
+  .activity-item {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    align-items: flex-start;
+  }
+
+  .activity-item + .activity-item {
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .activity-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--teal);
+    border-radius: 50%;
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .activity-text {
+    flex: 1;
+    font-size: 13px;
+  }
+
+  .activity-text strong {
+    color: var(--navy-deep);
+    font-weight: 600;
+  }
+
+  .activity-meta {
+    color: var(--ink-soft);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+
+  /* Bar chart visual */
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    height: 130px;
+    padding: 10px 0 0;
+  }
+
+  .bar {
+    flex: 1;
+    background: linear-gradient(180deg, var(--teal-bright) 0%, var(--teal) 100%);
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    min-height: 20px;
+  }
+
+  .bar-label {
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .bar-value {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: var(--navy-deep);
+    font-weight: 700;
+  }
+
+  .bar.declining {
+    background: linear-gradient(180deg, #fca5a5 0%, #ef4444 100%);
+  }
+
+  /* Email visual */
+  .email-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 13px;
+  }
+  .email-row + .email-row { border-top: 1px solid #f1f5f9; }
+  .email-status {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .status-sent { background: #dcfce7; color: #166534; }
+  .status-draft { background: #fef3c7; color: #92400e; }
+  .status-scheduled { background: #dbeafe; color: #1e40af; }
+
+  /* Sync visual */
+  .sync-flow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+  }
+
+  .sync-box {
+    flex: 1;
+    text-align: center;
+    padding: 16px 12px;
+    border: 1.5px dashed var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+  }
+
+  .sync-box.active {
+    border-color: var(--teal);
+    background: var(--teal-soft);
+  }
+
+  .sync-box-name {
+    font-weight: 700;
+    color: var(--navy-deep);
+    font-size: 13px;
+  }
+
+  .sync-box-sub {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  .sync-arrow {
+    color: var(--teal);
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .sync-detail {
+    margin-top: 14px;
+    padding: 10px 12px;
+    background: #f0fdf4;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #166534;
+    border-left: 3px solid #22c55e;
+  }
+
+  /* ===== ROI SECTION ===== */
+  .roi {
+    background: linear-gradient(180deg, var(--paper) 0%, var(--cream) 100%);
+  }
+
+  .roi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 16px;
+  }
+
+  .roi-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .roi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .roi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--teal) 0%, var(--teal-bright) 100%);
+  }
+
+  .roi-card-number {
+    font-family: 'Source Serif 4', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--teal);
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .roi-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy-deep);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .roi-assumption {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    padding: 14px 16px;
+    background: var(--cream);
+    border-radius: 8px;
+    border-left: 3px solid var(--teal);
+    margin-bottom: 24px;
+  }
+
+  .roi-assumption strong {
+    color: var(--navy-deep);
+    font-weight: 600;
+  }
+
+  .roi-impact-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+
+  .roi-impact-value {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--navy-deep);
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+
+  .roi-impact-value .currency {
+    font-size: 18px;
+    color: var(--teal);
+    margin-right: 2px;
+    vertical-align: top;
+    font-weight: 700;
+  }
+
+  .roi-impact-sub {
+    color: var(--ink-soft);
+    font-size: 13px;
+    margin-top: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .roi-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .roi-card-intro {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+
+  .roi-card-intro strong {
+    color: var(--navy-deep);
+    font-weight: 600;
+  }
+
+  .roi-sliders {
+    margin: 18px 0 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 18px 18px 16px;
+    background: var(--cream);
+    border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+
+  .roi-slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .roi-slider-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .roi-slider-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--teal);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+
+  .roi-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--line);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+  }
+
+  .roi-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background: transparent;
+  }
+
+  .roi-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: white;
+    border: 2px solid var(--teal);
+    border-radius: 50%;
+    cursor: grab;
+    margin-top: -7px;
+    box-shadow: 0 1px 3px rgba(11, 37, 69, 0.18);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .roi-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 2px 10px rgba(42, 157, 143, 0.45);
+  }
+
+  .roi-slider::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.2);
+  }
+
+  .roi-slider::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: transparent;
+  }
+
+  .roi-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: white;
+    border: 2px solid var(--teal);
+    border-radius: 50%;
+    cursor: grab;
+    box-shadow: 0 1px 3px rgba(11, 37, 69, 0.18);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .roi-slider::-moz-range-thumb:hover {
+    transform: scale(1.15);
+  }
+
+  .roi-impact-block {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px dashed var(--line);
+  }
+
+  .roi-reset-bar {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+
+  .roi-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: white;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+
+  .roi-reset:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    background: var(--teal-soft);
+  }
+
+  .roi-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: -32px;
+    margin-bottom: 40px;
+    padding: 10px 16px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .roi-hint .pulse {
+    width: 8px;
+    height: 8px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .roi-summary {
+    margin-top: 56px;
+    background: var(--navy-deep);
+    border-radius: 16px;
+    padding: 40px 48px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .roi-summary-text {
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .roi-summary-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--teal-bright);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .roi-summary-headline {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  .roi-summary-figure {
+    text-align: right;
+  }
+
+  .roi-summary-figure-value {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--teal-bright);
+  }
+
+  .roi-summary-figure-sub {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 6px;
+  }
+
+  /* ===== INVESTMENT ===== */
+  .investment-table {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-top: 16px;
+  }
+
+  .investment-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    padding: 28px 36px;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .investment-row + .investment-row {
+    border-top: 1px solid var(--line);
+  }
+
+  .investment-row.total {
+    background: var(--cream);
+    border-top: 2px solid var(--navy-deep);
+  }
+
+  .investment-label {
+    font-weight: 700;
+    color: var(--navy-deep);
+    font-size: 16px;
+  }
+
+  .investment-detail {
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .investment-amount {
+    font-weight: 700;
+    color: var(--navy-deep);
+    font-size: 20px;
+    text-align: right;
+    letter-spacing: -0.01em;
+  }
+
+  .investment-amount-sub {
+    display: block;
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .investment-row.total .investment-amount {
+    font-size: 28px;
+    color: var(--teal);
+  }
+
+  .timeline-strip {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+    padding: 20px 28px;
+    background: var(--teal-soft);
+    border-radius: 10px;
+    border-left: 4px solid var(--teal);
+  }
+
+  .timeline-icon {
+    font-size: 24px;
+  }
+
+  .timeline-text {
+    color: var(--navy-deep);
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .timeline-text strong { font-weight: 700; }
+
+  /* ===== WHY THIS WORKS ===== */
+  .why {
+    background: var(--navy-deep);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -200px;
+    transform: translateY(-50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(42, 157, 143, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .why .section-title { color: white; }
+  .why .section-eyebrow { color: var(--teal-bright); }
+  .why .section-lede { color: rgba(255, 255, 255, 0.75); }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    margin-top: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .why-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 28px 32px;
+    backdrop-filter: blur(10px);
+  }
+
+  .why-card-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(42, 157, 143, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    color: var(--teal-bright);
+  }
+
+  .why-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .why-card p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+
+  /* ===== CTA / NEXT STEPS ===== */
+  .cta {
+    background: var(--paper);
+    text-align: center;
+    padding: 110px 0;
+  }
+
+  .cta-content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .cta h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    color: var(--navy-deep);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    margin-bottom: 20px;
+  }
+
+  .cta h2 .accent {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--teal);
+  }
+
+  .cta p {
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .cta-btn-primary {
+    background: var(--navy-deep);
+    color: white;
+    padding: 18px 36px;
+    font-size: 16px;
+    box-shadow: 0 8px 24px rgba(11, 37, 69, 0.2);
+  }
+
+  .cta-btn-primary:hover {
+    background: var(--navy);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(11, 37, 69, 0.3);
+  }
+
+  .cta-btn-secondary {
+    background: white;
+    color: var(--navy-deep);
+    border: 1.5px solid var(--line);
+    padding: 18px 36px;
+    font-size: 16px;
+  }
+
+  .cta-btn-secondary:hover {
+    border-color: var(--navy-deep);
+  }
+
+  .cta-meta {
+    color: var(--ink-soft);
+    font-size: 14px;
+    border-top: 1px solid var(--line);
+    padding-top: 32px;
+    margin-top: 8px;
+  }
+
+  .cta-meta-grid {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .cta-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cta-meta-icon {
+    color: var(--teal);
+    font-size: 18px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--navy-deep);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 40px 0;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  footer a {
+    color: var(--teal-bright);
+    text-decoration: none;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 960px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 60px;
+    }
+    .problem-grid,
+    .why-grid,
+    .roi-grid {
+      grid-template-columns: 1fr;
+    }
+    .solution-item {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .investment-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .investment-amount {
+      text-align: left;
+    }
+    .roi-summary {
+      flex-direction: column;
+      text-align: center;
+    }
+    .roi-summary-figure {
+      text-align: center;
+    }
+    section { padding: 70px 0; }
+    .hero { padding: 80px 0 100px; }
+    .container { padding: 0 24px; }
+  }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand-mark">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#0b2545" stroke-width="2"/>
+        <path d="M12 6v6l4 2" stroke="#2a9d8f" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Noosa Radiology</span>
+      <span class="brand-divider">×</span>
+      <span class="brand-partner">Salesforce Sales Cloud</span>
+    </div>
+    <div class="topbar-meta">Proposal · Prepared June 2026</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          <span>A proposal for Noosa Radiology</span>
+        </div>
+        <h1>Replace the spreadsheets.<br>Keep the <span class="highlight">referrers.</span></h1>
+        <p class="hero-sub">
+          One referrer relationship hub for all four clinics — built around the way your team already works, not the other way around.
+        </p>
+        <div class="hero-ctas">
+          <a href="#solution" class="btn btn-primary">
+            See how it works
+            <span class="btn-arrow">→</span>
+          </a>
+          <a href="#roi" class="btn btn-secondary">View the numbers</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-card-title">Top referrers · This quarter</div>
+            <div class="hero-card-badge">Live</div>
+          </div>
+          <div class="hero-row">
+            <div class="hero-row-label">
+              <div class="hero-avatar">JM</div>
+              Dr J. Matthews · GP
+            </div>
+            <div class="hero-row-value trend-up">↑ 142</div>
+          </div>
+          <div class="hero-row">
+            <div class="hero-row-label">
+              <div class="hero-avatar">SR</div>
+              Dr S. Reilly · Specialist
+            </div>
+            <div class="hero-row-value trend-up">↑ 38</div>
+          </div>
+          <div class="hero-row">
+            <div class="hero-row-label">
+              <div class="hero-avatar">AB</div>
+              Dr A. Buchanan · GP
+            </div>
+            <div class="hero-row-value trend-flat">— 91</div>
+          </div>
+          <div class="hero-row">
+            <div class="hero-row-label">
+              <div class="hero-avatar">PK</div>
+              Dr P. Khan · Dental
+            </div>
+            <div class="hero-row-value trend-down">↓ 12</div>
+          </div>
+        </div>
+        <div class="hero-card-2">
+          <div class="hero-card-2-label">Active referrers</div>
+          <div class="hero-card-2-value">347</div>
+          <div class="hero-card-2-trend">↑ 18 this month</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="section-eyebrow">The world today</div>
+    <h2 class="section-title">Four clinics. One spreadsheet. <span class="accent">Something has to give.</span></h2>
+    <p class="section-lede">
+      You've grown from one practice to four — and the systems that worked when it was a single clinic are becoming a quiet bottleneck. Here's what that looks like day to day:
+    </p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">📋</div>
+        <h3>Referrer data lives in Excel</h3>
+        <p>Every GP, specialist, and dental practitioner is tracked in spreadsheets. Updates happen when someone remembers to make them. There's no single source of truth across your four clinics.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🔁</div>
+        <h3>Comrade RIS exports are manual</h3>
+        <p>Pulling referral activity out of Comrade and into a usable view takes hours every week. The data is always slightly out of date by the time someone looks at it.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">👀</div>
+        <h3>No visibility across clinics</h3>
+        <p>A practice manager at one site has no easy way to see what their counterpart at another site is doing. Visits, follow-ups, and wins go untracked or live in someone's inbox.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📉</div>
+        <h3>You can't see who's drifting away</h3>
+        <p>A reliable GP referrer drops off — and you don't notice for three months. By then, the relationship has cooled and someone else has filled the gap.</p>
+      </div>
+    </div>
+
+    <div class="problem-callout">
+      <div class="problem-callout-icon">⚡</div>
+      <div class="problem-callout-text">
+        Every one of these problems is fixable today. The next four clinics' worth of growth depends on <strong>not solving them with more spreadsheets.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI (moved above Solution) -->
+<section class="roi" id="roi">
+  <div class="container">
+    <div class="section-eyebrow">The numbers</div>
+    <h2 class="section-title">What it's worth — <span class="accent">on your assumptions.</span></h2>
+    <p class="section-lede">
+      You don't currently track ROI on referrer relationships, so we've started with industry-standard assumptions for radiology. <strong>Drag any slider</strong> to swap in your own numbers — the impact figures recalculate live.
+    </p>
+
+    <div class="roi-hint">
+      <span class="pulse"></span>
+      <span>These cards are interactive. Try dragging the sliders.</span>
+    </div>
+
+    <div class="roi-grid">
+
+      <!-- Card 1: Referrer Retention -->
+      <div class="roi-card">
+        <div class="roi-card-number">— 01 —</div>
+        <h3>Referrer Retention Value</h3>
+        <p class="roi-card-intro">
+          The cost of letting mid-tier GPs drift to a competitor before anyone notices.
+        </p>
+        <div class="roi-sliders">
+          <div class="roi-slider-group">
+            <div class="roi-slider-label">
+              <span>Patients per month, per GP</span>
+              <span class="roi-slider-value" id="retention-patients-value">8</span>
+            </div>
+            <input type="range" class="roi-slider" id="retention-patients"
+              min="3" max="20" step="1" value="8"
+              data-card="retention" data-field="patients">
+          </div>
+          <div class="roi-slider-group">
+            <div class="roi-slider-label">
+              <span>Average scan revenue (AUD)</span>
+              <span class="roi-slider-value" id="retention-revenue-value">A$280</span>
+            </div>
+            <input type="range" class="roi-slider" id="retention-revenue"
+              min="150" max="500" step="10" value="280"
+              data-card="retention" data-field="revenue" data-format="currency">
+          </div>
+          <div class="roi-slider-group">
+            <div class="roi-slider-label">
+              <span>At-risk GPs caught per year</span>
+              <span class="roi-slider-value" id="retention-gps-value">3</span>
+            </div>
+            <input type="range" class="roi-slider" id="retention-gps"
+              min="1" max="10" step="1" value="3"
+              data-card="retention" data-field="gps">
+          </div>
+        </div>
+        <div class="roi-impact-block">
+          <div class="roi-impact-label">Revenue protected / year</div>
+          <div class="roi-impact-value"><span class="currency">A$</span><span id="retention-impact">80,640</span></div>
+          <div class="roi-impact-sub" id="retention-breakdown">3 GPs × A$26,880 each</div>
+        </div>
+      </div>
+
+      <!-- Card 2: Staff Time -->
+      <div class="roi-card">
+        <div class="roi-card-number">— 02 —</div>
+        <h3>Staff Time Recovered</h3>
+        <p class="roi-card-intro">
+          Hours your team gets back from killing manual spreadsheet updates and Comrade exports.
+        </p>
+        <div class="roi-sliders">
+          <div class="roi-slider-group">
+            <div class="roi-slider-label">
+              <span>Hours per week saved across the team</span>
+              <span class="roi-slider-value" id="time-hours-value">10 hrs</span>
+            </div>
+            <input type="range" class="roi-slider" id="time-hours"
+              min="2" max="25" step="1" value="10"
+              data-card="time" data-field="hours" data-format="hours">
+          </div>
+          <div class="roi-slider-group">
+            <div class="roi-slider-label">
+              <span>Blended hourly rate (manager + admin)</span>
+              <span class="roi-slider-value" id="time-rate-value">A$45</span>
+            </div>
+            <input type="range" class="roi-slider" id="time-rate"
+              min="25" max="80" step="5" value="45"
+              data-card="time" data-field="rate" data-format="currency">
+          </div>
+        </div>
+        <div class="roi-impact-block">
+          <div class="roi-impact-label">Time + cost saved / year</div>
+          <div class="roi-impact-value"><span class="currency">A$</span><span id="time-impact">23,400</span></div>
+          <div class="roi-impact-sub" id="time-breakdown">520 hours × A$45/hour</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Reactivation -->
+      <div class="roi-card">
+        <div class="roi-card-number">— 03 —</div>
+        <h3>Reactivated Lapsed Referrers</h3>
+        <p class="roi-card-intro">
+          New in-year revenue from re-engaging dormant referrers your dashboards surface.
+        </p>
+        <div class="roi-sliders">
+          <div class="roi-slider-group">
+            <div class="roi-slider-label">
+              <span>Lapsed referrers reactivated</span>
+              <span class="roi-slider-value" id="react-referrers-value">20</span>
+            </div>
+            <input type="range" class="roi-slider" id="react-referrers"
+              min="5" max="50" step="1" value="20"
+              data-card="reactivation" data-field="referrers">
+          </div>
+          <div class="roi-slider-group">
+            <div class="roi-slider-label">
+              <span>New referrals / year, each</span>
+              <span class="roi-slider-value" id="react-referrals-value">4</span>
+            </div>
+            <input type="range" class="roi-slider" id="react-referrals"
+              min="1" max="12" step="1" value="4"
+              data-card="reactivation" data-field="referrals">
+          </div>
+          <div class="roi-slider-group">
+            <div class="roi-slider-label">
+              <span>Average scan revenue (AUD)</span>
+              <span class="roi-slider-value" id="react-revenue-value">A$280</span>
+            </div>
+            <input type="range" class="roi-slider" id="react-revenue"
+              min="150" max="500" step="10" value="280"
+              data-card="reactivation" data-field="revenue" data-format="currency">
+          </div>
+        </div>
+        <div class="roi-impact-block">
+          <div class="roi-impact-label">New revenue / year</div>
+          <div class="roi-impact-value"><span class="currency">A$</span><span id="react-impact">22,400</span></div>
+          <div class="roi-impact-sub" id="react-breakdown">20 × 4 × A$280</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="roi-reset-bar">
+      <button type="button" class="roi-reset" id="roi-reset">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        Reset to default assumptions
+      </button>
+    </div>
+
+    <div class="roi-summary">
+      <div class="roi-summary-text">
+        <div class="roi-summary-label">Combined annual value · on your assumptions</div>
+        <div class="roi-summary-headline">First-year impact across all three levers</div>
+      </div>
+      <div class="roi-summary-figure">
+        <div class="roi-summary-figure-value" id="roi-total">A$126,440</div>
+        <div class="roi-summary-figure-sub">vs. ~A$59,400 first-year investment</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div class="container">
+    <div class="section-eyebrow">The solution</div>
+    <h2 class="section-title">A referrer hub <span class="accent">built around your workflow.</span></h2>
+    <p class="section-lede">
+      Salesforce Sales Cloud is the platform underneath. We've shaped it specifically for radiology referrer management — so your team sees what they need on day one, not in three months.
+    </p>
+
+    <div class="solution-list">
+
+      <div class="solution-item">
+        <div class="solution-number">01</div>
+        <div class="solution-content">
+          <h3>Referrer Management</h3>
+          <span class="plain-name">A central contact book — not "leads" or "accounts"</span>
+          <p>Every GP, specialist, allied health practitioner, and dental contact in one place, linked to their parent practice. Doctors who work across multiple practices show up correctly in each. Your existing Excel sheets get imported on day one — no double entry, no rebuilding.</p>
+        </div>
+        <div class="solution-visual">
+          <div class="visual-header">
+            <div class="visual-dots"><span></span><span></span><span></span></div>
+            <div class="visual-title">Referrers · Sunshine Coast Medical Centre</div>
+          </div>
+          <div class="visual-content">
+            <div class="visual-row">
+              <div class="visual-row-name">Dr Sarah Patel <span class="visual-pill pill-gp">GP</span></div>
+              <div class="visual-row-meta">2 practices</div>
+            </div>
+            <div class="visual-row">
+              <div class="visual-row-name">Dr Michael Chen <span class="visual-pill pill-spec">Specialist</span></div>
+              <div class="visual-row-meta">1 practice</div>
+            </div>
+            <div class="visual-row">
+              <div class="visual-row-name">Dr Emma Walsh <span class="visual-pill pill-dental">Dental</span></div>
+              <div class="visual-row-meta">1 practice</div>
+            </div>
+            <div class="visual-row">
+              <div class="visual-row-name">Dr James O'Brien <span class="visual-pill pill-allied">Allied</span></div>
+              <div class="visual-row-meta">3 practices</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="solution-item">
+        <div class="solution-number">02</div>
+        <div class="solution-content">
+          <h3>Activity Tracking</h3>
+          <span class="plain-name">A shared logbook of who did what, when</span>
+          <p>Visited Dr Patel on Tuesday? Logged. Phone call with the new specialist clinic in Coolum? Logged. Set a "next visit due" date and the system reminds whoever owns that relationship. Practice managers see all four clinics' activity in one place — without chasing inboxes.</p>
+        </div>
+        <div class="solution-visual">
+          <div class="visual-header">
+            <div class="visual-dots"><span></span><span></span><span></span></div>
+            <div class="visual-title">Recent activity · All clinics</div>
+          </div>
+          <div class="visual-content">
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div class="activity-text">
+                <strong>Site visit</strong> — Dr Patel, Sunshine Coast MC
+                <div class="activity-meta">Yesterday · Logged by Mia · Next visit: 14 May</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div class="activity-text">
+                <strong>Phone call</strong> — Coolum Specialist Clinic
+                <div class="activity-meta">2 days ago · Logged by Tom</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div class="activity-text">
+                <strong>Lunch event</strong> — 8 referrers attended
+                <div class="activity-meta">Last week · Hosted by Dr Lee</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="solution-item">
+        <div class="solution-number">03</div>
+        <div class="solution-content">
+          <h3>Reporting & Dashboards</h3>
+          <span class="plain-name">Visual answers, not pivot tables</span>
+          <p>One screen tells you who's growing, who's slipping, and who hasn't referred in 90 days. Filter by clinic, by referrer type, by suburb. GPs (high volume, lower individual value) and specialists / allied / dental (lower volume, higher value) each get their own view, so you compare apples to apples.</p>
+        </div>
+        <div class="solution-visual">
+          <div class="visual-header">
+            <div class="visual-dots"><span></span><span></span><span></span></div>
+            <div class="visual-title">Referral volume · Last 6 months</div>
+          </div>
+          <div class="visual-content">
+            <div class="bar-chart">
+              <div class="bar" style="height: 55%;"><span class="bar-value">48</span><span class="bar-label">Nov</span></div>
+              <div class="bar" style="height: 68%;"><span class="bar-value">61</span><span class="bar-label">Dec</span></div>
+              <div class="bar" style="height: 60%;"><span class="bar-value">54</span><span class="bar-label">Jan</span></div>
+              <div class="bar" style="height: 78%;"><span class="bar-value">71</span><span class="bar-label">Feb</span></div>
+              <div class="bar declining" style="height: 45%;"><span class="bar-value">38</span><span class="bar-label">Mar</span></div>
+              <div class="bar" style="height: 88%;"><span class="bar-value">82</span><span class="bar-label">Apr</span></div>
+            </div>
+            <div style="margin-top: 32px; font-size: 12px; color: var(--ink-soft); text-align: center;">
+              <span style="color: #ef4444;">●</span> March drop = Dr Buchanan's referrals fell 60%. Flagged for follow-up.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="solution-item">
+        <div class="solution-number">04</div>
+        <div class="solution-content">
+          <h3>Campaign Management</h3>
+          <span class="plain-name">Send emails and event invites without a separate tool</span>
+          <p>Need to invite your top 50 referring GPs to a Friday lunch talk? Build the list, send the invite, track who opened and replied — all in the same place your contacts live. Newsletters, flyers, RSVP tracking, follow-ups. No Mailchimp. No CSV uploads.</p>
+        </div>
+        <div class="solution-visual">
+          <div class="visual-header">
+            <div class="visual-dots"><span></span><span></span><span></span></div>
+            <div class="visual-title">Campaigns</div>
+          </div>
+          <div class="visual-content">
+            <div class="email-row">
+              <div>
+                <div style="font-weight: 600; color: var(--navy-deep);">May Newsletter — All referrers</div>
+                <div style="font-size: 11px; color: var(--ink-soft); margin-top: 2px;">347 sent · 68% open rate</div>
+              </div>
+              <span class="email-status status-sent">Sent</span>
+            </div>
+            <div class="email-row">
+              <div>
+                <div style="font-weight: 600; color: var(--navy-deep);">CT Cardiac Lunch & Learn</div>
+                <div style="font-size: 11px; color: var(--ink-soft); margin-top: 2px;">52 invited · 18 RSVP yes</div>
+              </div>
+              <span class="email-status status-scheduled">Scheduled</span>
+            </div>
+            <div class="email-row">
+              <div>
+                <div style="font-weight: 600; color: var(--navy-deep);">Q3 Service Update</div>
+                <div style="font-size: 11px; color: var(--ink-soft); margin-top: 2px;">Drafting · GPs only</div>
+              </div>
+              <span class="email-status status-draft">Draft</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="solution-item">
+        <div class="solution-number">05</div>
+        <div class="solution-content">
+          <h3>Comrade RIS Integration</h3>
+          <span class="plain-name">Your existing system, automated</span>
+          <p>Salesforce connects to Comrade and pulls referral activity in automatically — no more weekly exports, no more copy-paste. The numbers in your dashboards reflect what actually happened yesterday, not what someone got around to entering. Comrade keeps doing what it does well; Salesforce becomes the lens you look through.</p>
+        </div>
+        <div class="solution-visual">
+          <div class="visual-header">
+            <div class="visual-dots"><span></span><span></span><span></span></div>
+            <div class="visual-title">Daily sync · Comrade RIS → Salesforce</div>
+          </div>
+          <div class="visual-content">
+            <div class="sync-flow">
+              <div class="sync-box active">
+                <div class="sync-box-name">Comrade RIS</div>
+                <div class="sync-box-sub">Source of truth</div>
+              </div>
+              <div class="sync-arrow">→</div>
+              <div class="sync-box">
+                <div class="sync-box-name">Salesforce</div>
+                <div class="sync-box-sub">Reporting layer</div>
+              </div>
+            </div>
+            <div class="sync-detail">
+              ✓ Last sync: 6 minutes ago · 23 new referrals imported
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- INVESTMENT -->
+<section id="investment">
+  <div class="container">
+    <div class="section-eyebrow">Investment</div>
+    <h2 class="section-title">Transparent pricing. <span class="accent">Nothing hidden.</span></h2>
+    <p class="section-lede">
+      Two line items. One go-live date. The numbers below assume 10 users to start, scaling with you as the network grows.
+    </p>
+
+    <div class="investment-table">
+      <div class="investment-row">
+        <div class="investment-label">Licenses</div>
+        <div class="investment-detail">A$2,940 per user / year, billed annually. Includes all features above. Easy to add seats as your team grows.</div>
+        <div class="investment-amount">
+          A$29,400<span class="investment-amount-sub">/ year (10 users)</span>
+        </div>
+      </div>
+      <div class="investment-row">
+        <div class="investment-label">Implementation</div>
+        <div class="investment-detail">Discovery, configuration, Excel and Comrade RIS data migration, training, and 30-day post-go-live support. Approximately 2-week turnaround.</div>
+        <div class="investment-amount">
+          A$25k–A$35k<span class="investment-amount-sub">one-time</span>
+        </div>
+      </div>
+      <div class="investment-row total">
+        <div class="investment-label">First-year total</div>
+        <div class="investment-detail">All-in. No surprise add-ons, no per-feature unlocks.</div>
+        <div class="investment-amount">
+          ~A$59,400<span class="investment-amount-sub">year 1 · A$29,400 thereafter</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-strip">
+      <div class="timeline-icon">🗓</div>
+      <div class="timeline-text">
+        <strong>Target go-live: August 2026.</strong> Live and reporting before Q4 — in time for your highest-volume referral months.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY THIS WORKS -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="section-eyebrow">Why this fits</div>
+    <h2 class="section-title">Built for clinics that <span class="accent">don't have a CRM team.</span></h2>
+    <p class="section-lede">
+      Salesforce is the platform behind 150,000+ businesses globally. The version you're getting has been shaped specifically for a four-clinic radiology group with no prior CRM experience.
+    </p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Built for your scale</h3>
+        <p>Configured for a 10-user team across four clinics — not over-engineered for a 500-person enterprise. Nothing extra to wade through; everything you need on day one.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>No patient data involved</h3>
+        <p>This system holds <em>referrer</em> contacts and activity only — GPs, specialists, allied health, dental practitioners. Patient records stay where they belong: in Comrade. Compliance scope stays narrow.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Transparent pricing</h3>
+        <p>Two line items: licenses and implementation. No "modules", no "add-ons" that appear in year two. The price you see is the price you pay.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <h3>Scales past four clinics</h3>
+        <p>The same system that runs four locations runs ten or twenty without re-platforming. As you grow, new clinics, users, and referrers get added — not rebuilt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Let's bring in a <span class="accent">Solution Engineer.</span></h2>
+      <p>
+        The next step is engaging a Salesforce Solution Engineer to build out exactly what your environment would look like — your referrer types, your four clinics, your Comrade RIS connection, your dashboards. You'll see the actual solution working with your data, not slides describing it.
+      </p>
+      <div class="cta-actions">
+        <a href="mailto:proposal@example.com?subject=Noosa%20Radiology%20%E2%80%94%20Solution%20Engineer%20Engagement" class="btn cta-btn-primary">
+          Move forward with a Solution Engineer
+          <span class="btn-arrow">→</span>
+        </a>
+        <a href="#solution" class="btn cta-btn-secondary">Re-read the proposal</a>
+      </div>
+      <div class="cta-meta">
+        <div class="cta-meta-grid">
+          <div class="cta-meta-item">
+            <span class="cta-meta-icon">🛠</span>
+            <span>Built on your real data</span>
+          </div>
+          <div class="cta-meta-item">
+            <span class="cta-meta-icon">🎯</span>
+            <span>Tailored to your workflow</span>
+          </div>
+          <div class="cta-meta-item">
+            <span class="cta-meta-icon">🤝</span>
+            <span>No commitment required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div>Proposal prepared for Noosa Radiology · June 2026</div>
+    <div>Questions? <a href="mailto:proposal@example.com">proposal@example.com</a></div>
+  </div>
+</footer>
+
+<script>
+  // Subtle reveal-on-scroll
+  const reveals = document.querySelectorAll(
+    '.problem-card, .solution-item, .roi-card, .why-card, .investment-row'
+  );
+  reveals.forEach(el => el.classList.add('reveal'));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => io.observe(el));
+
+  // ===== ROI Calculator =====
+  const fmtAUD = (n) => 'A$' + Math.round(n).toLocaleString('en-AU');
+  const fmtNumber = (n) => Math.round(n).toLocaleString('en-AU');
+
+  const roiState = {
+    retention:    { patients: 8,  revenue: 280, gps: 3 },
+    time:         { hours: 10,    rate: 45 },
+    reactivation: { referrers: 20, referrals: 4, revenue: 280 }
+  };
+
+  const roiDefaults = JSON.parse(JSON.stringify(roiState));
+
+  function updateSliderFill(slider) {
+    const min = parseFloat(slider.min);
+    const max = parseFloat(slider.max);
+    const val = parseFloat(slider.value);
+    const pct = ((val - min) / (max - min)) * 100;
+    slider.style.background =
+      `linear-gradient(to right, var(--teal) 0%, var(--teal) ${pct}%, var(--line) ${pct}%, var(--line) 100%)`;
+  }
+
+  function formatSliderValue(slider) {
+    const v = slider.value;
+    if (slider.dataset.format === 'currency') return 'A$' + parseInt(v, 10).toLocaleString('en-AU');
+    if (slider.dataset.format === 'hours')    return v + ' hrs';
+    return v;
+  }
+
+  function calculateROI() {
+    const r = roiState.retention;
+    const perGP = (r.patients * 12) * r.revenue;
+    const retentionValue = r.gps * perGP;
+
+    const t = roiState.time;
+    const totalHours = t.hours * 52;
+    const timeValue = totalHours * t.rate;
+
+    const x = roiState.reactivation;
+    const reactValue = x.referrers * x.referrals * x.revenue;
+
+    const total = retentionValue + timeValue + reactValue;
+
+    document.getElementById('retention-impact').textContent = fmtNumber(retentionValue);
+    document.getElementById('retention-breakdown').textContent =
+      `${r.gps} GP${r.gps !== 1 ? 's' : ''} × ${fmtAUD(perGP)} each`;
+
+    document.getElementById('time-impact').textContent = fmtNumber(timeValue);
+    document.getElementById('time-breakdown').textContent =
+      `${fmtNumber(totalHours)} hours × A$${t.rate}/hour`;
+
+    document.getElementById('react-impact').textContent = fmtNumber(reactValue);
+    document.getElementById('react-breakdown').textContent =
+      `${x.referrers} referrers × ${x.referrals} × ${fmtAUD(x.revenue)}`;
+
+    document.getElementById('roi-total').textContent = fmtAUD(total);
+  }
+
+  // Wire up sliders
+  document.querySelectorAll('.roi-slider').forEach(slider => {
+    updateSliderFill(slider);
+    const valueEl = document.getElementById(slider.id + '-value');
+
+    slider.addEventListener('input', () => {
+      const card = slider.dataset.card;
+      const field = slider.dataset.field;
+      roiState[card][field] = parseFloat(slider.value);
+      if (valueEl) valueEl.textContent = formatSliderValue(slider);
+      updateSliderFill(slider);
+      calculateROI();
+    });
+  });
+
+  // Reset button
+  document.getElementById('roi-reset').addEventListener('click', () => {
+    Object.assign(roiState, JSON.parse(JSON.stringify(roiDefaults)));
+
+    const map = {
+      'retention-patients': roiDefaults.retention.patients,
+      'retention-revenue':  roiDefaults.retention.revenue,
+      'retention-gps':      roiDefaults.retention.gps,
+      'time-hours':         roiDefaults.time.hours,
+      'time-rate':          roiDefaults.time.rate,
+      'react-referrers':    roiDefaults.reactivation.referrers,
+      'react-referrals':    roiDefaults.reactivation.referrals,
+      'react-revenue':      roiDefaults.reactivation.revenue
+    };
+
+    Object.entries(map).forEach(([id, val]) => {
+      const s = document.getElementById(id);
+      s.value = val;
+      const valueEl = document.getElementById(id + '-value');
+      if (valueEl) valueEl.textContent = formatSliderValue(s);
+      updateSliderFill(s);
+    });
+
+    calculateROI();
+  });
+
+  calculateROI();
+</script>
+
+</body>
+</html>
